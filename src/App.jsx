@@ -108,16 +108,6 @@ export default function App() {
     }
   };
 
-  // Export JSON (Memenuhi Unit Akses File)
-  const handleExport = async () => {
-    try {
-      const res = await ApiService.exportToJson();
-      showToast(`Backup berhasil disimpan ke server: ${res.filePath}`, 'success');
-    } catch (error) {
-      showToast(`Gagal mengekspor data: ${error.message}`, 'danger');
-    }
-  };
-
   return (
     <div>
       <Navbar isBackendConnected={isBackendConnected} />
@@ -147,7 +137,6 @@ export default function App() {
           onDelete={(siswa) => {
             setDeleteTarget(siswa);
           }}
-          onExport={handleExport}
         />
       </main>
 

@@ -107,13 +107,6 @@ class ApiService {
     static async checkHealth() {
         return this._request('/health');
     }
-
-    /**
-     * Ekspor data ke file JSON di backend
-     */
-    static async exportToJson() {
-        return this._request('/siswa/export/json');
-    }
 }
 
 export default ApiService;

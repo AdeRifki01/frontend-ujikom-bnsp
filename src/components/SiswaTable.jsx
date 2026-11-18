@@ -2,7 +2,6 @@ import React from "react";
 import {
   IconSearch,
   IconPlus,
-  IconDownload,
   IconEdit,
   IconTrash,
   IconX,
@@ -41,8 +40,7 @@ export default function SiswaTable({
   onSearchChange,
   onAddNew,
   onEdit,
-  onDelete,
-  onExport
+  onDelete
 }) {
   return (
     <div className="main-card">
@@ -76,16 +74,6 @@ export default function SiswaTable({
               </button>
             )}
           </div>
-
-          <button
-            type="button"
-            className="btn btn-outline"
-            onClick={onExport}
-            title="Ekspor berkas JSON untuk arsip/backup"
-          >
-            <IconDownload size={15} />
-            <span>Ekspor JSON</span>
-          </button>
 
           <button
             type="button"
