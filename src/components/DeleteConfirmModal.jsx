@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { IconAlertTriangle, IconX } from "./Icons";
 
 export default function DeleteConfirmModal({
   isOpen,
@@ -23,43 +24,46 @@ export default function DeleteConfirmModal({
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '440px' }}>
-        <div className="modal-header">
-          <h3>Konfirmasi Penghapusan</h3>
-          <button type="button" className="btn-close" onClick={onClose}>
-            ✕
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal-dialog" onClick={(e) => e.stopPropagation()} style={{ maxWidth: "440px" }}>
+        <div className="modal-head">
+          <h3 className="modal-title">Konfirmasi Penghapusan</h3>
+          <button
+            type="button"
+            className="modal-close-icon"
+            onClick={onClose}
+            title="Tutup dialog"
+          >
+            <IconX size={18} />
           </button>
         </div>
 
-        <div className="modal-body" style={{ textAlign: 'center', padding: '28px 24px' }}>
-          <div style={{ fontSize: '48px', marginBottom: '12px' }}>⚠️</div>
-          <p style={{ fontSize: '1rem', color: '#1e293b', marginBottom: '8px' }}>
-            Apakah Anda yakin ingin menghapus data siswa ini?
-          </p>
-          <div style={{
-            background: '#f8fafc',
-            padding: '12px',
-            borderRadius: '8px',
-            border: '1px solid #e2e8f0',
-            marginTop: '12px'
-          }}>
-            <p style={{ fontWeight: 700, color: '#0f172a' }}>{siswaData.nama_siswa}</p>
-            <p style={{ fontSize: '0.85rem', color: '#64748b' }}>Kode: {siswaData.kode_siswa} | {siswaData.nama_jurusan}</p>
+        <div className="modal-content-area danger-notice-panel">
+          <div className="danger-icon-badge">
+            <IconAlertTriangle size={24} />
           </div>
-          <p style={{ fontSize: '0.8rem', color: '#ef4444', marginTop: '12px' }}>
-            Data yang dihapus dari database tidak dapat dikembalikan.
+
+          <h4 className="danger-title">Hapus Data Siswa Terpilih?</h4>
+          <p className="danger-description">
+            Tindakan ini akan menghapus rekaman siswa secara permanen dari basis data PostgreSQL.
           </p>
+
+          <div className="student-delete-preview">
+            <div className="preview-name">{siswaData.nama_siswa}</div>
+            <div className="preview-meta">
+              Kode: <strong>{siswaData.kode_siswa}</strong> • Program: {siswaData.nama_jurusan || "-"}
+            </div>
+          </div>
         </div>
 
-        <div className="modal-footer">
+        <div className="modal-action-bar">
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-outline"
             onClick={onClose}
             disabled={submitting}
           >
-            Batal
+            Batalkan
           </button>
           <button
             type="button"
@@ -67,7 +71,7 @@ export default function DeleteConfirmModal({
             onClick={handleConfirm}
             disabled={submitting}
           >
-            {submitting ? 'Menghapus...' : 'Ya, Hapus Data'}
+            {submitting ? "Memproses..." : "Ya, Hapus Permanen"}
           </button>
         </div>
       </div>

@@ -1,35 +1,36 @@
 import React from "react";
+import { IconGraduationCap, IconDatabase } from "./Icons";
 
 export default function Navbar({ isBackendConnected }) {
-    return (
-        <header className="navbar">
-            <div className="navbar-inner">
-                <div className="nav-brand">
-                    <div className="brand-icon">🎓</div>
-                    <div className="brand-text">
-                        <h1>DATA SISWA</h1>
-                        <p>Uji Kompetensi FullStack Web Developer (Node.js & React)</p>
-                    </div>
-                </div>
+  return (
+    <header className="navbar">
+      <div className="navbar-inner">
+        <div className="nav-brand">
+          <div className="brand-icon-wrapper">
+            <IconGraduationCap size={22} />
+          </div>
+          <div className="brand-meta">
+            <h1>Sistem Administrasi Data Siswa</h1>
+            <p>Portal Pengelolaan Data Induk Akademik &amp; Jurusan Siswa</p>
+          </div>
+        </div>
 
-                <div className="nav-status">
-                    <span
-                        className="status-badge"
-                        style={{
-                            backgroundColor: isBackendConnected ? "var(--success-light)" : "var(--danger-light)",
-                            color: isBackendConnected ? "#065f46" : "#991b1b",
-                        }}
-                    >
-                        <span
-                            className="status-dot"
-                            style={{
-                                backgroundColor: isBackendConnected ? "var(--success)" : "var(--danger)",
-                            }}
-                        ></span>
-                        {isBackendConnected ? "Backend Terhubung (Port 5000)" : "Backend Terputus"}
-                    </span>
-                </div>
-            </div>
-        </header>
-    );
+        <div className="nav-status">
+          <div
+            className={`system-status-chip ${
+              isBackendConnected ? "status-online" : "status-offline"
+            }`}
+          >
+            <span className="status-indicator"></span>
+            <IconDatabase size={13} />
+            <span>
+              {isBackendConnected
+                ? "Database PostgreSQL (5432) Terhubung"
+                : "Server Backend Tidak Terjangkau"}
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
 }

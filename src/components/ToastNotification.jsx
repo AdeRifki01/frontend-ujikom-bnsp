@@ -1,23 +1,38 @@
-import React from 'react';
+import React from "react";
+import {
+  IconCheckCircle,
+  IconXCircle,
+  IconAlertTriangle,
+  IconInfo
+} from "./Icons";
 
 export default function ToastNotification({ toasts, onDismiss }) {
   if (!toasts || toasts.length === 0) return null;
 
+  const renderIcon = (type) => {
+    switch (type) {
+      case "success":
+        return <IconCheckCircle size={18} className="toast-icon" />;
+      case "danger":
+        return <IconXCircle size={18} className="toast-icon" />;
+      case "warning":
+        return <IconAlertTriangle size={18} className="toast-icon" />;
+      default:
+        return <IconInfo size={18} className="toast-icon" />;
+    }
+  };
+
   return (
-    <div className="toast-container">
+    <div className="toast-stack">
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className={`toast toast-${toast.type || 'info'}`}
+          className={`clean-toast toast-${toast.type || "info"}`}
           onClick={() => onDismiss(toast.id)}
+          title="Klik untuk menutup pemberitahuan"
         >
-          <span style={{ fontSize: '1.1rem' }}>
-            {toast.type === 'success' && '✅'}
-            {toast.type === 'danger' && '❌'}
-            {toast.type === 'warning' && '⚠️'}
-            {toast.type === 'info' && 'ℹ️'}
-          </span>
-          <span className="toast-message">{toast.message}</span>
+          {renderIcon(toast.type)}
+          <span className="toast-message-text">{toast.message}</span>
         </div>
       ))}
     </div>

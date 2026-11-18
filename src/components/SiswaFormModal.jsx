@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { IconX } from "./Icons";
 
 export default function SiswaFormModal({
   isOpen,
@@ -10,11 +11,11 @@ export default function SiswaFormModal({
   const isEditMode = Boolean(initialData && initialData.id);
 
   const [formData, setFormData] = useState({
-    kode_siswa: '',
-    nama_siswa: '',
-    alamat_siswa: '',
-    tgl_siswa: '',
-    id_jurusan: ''
+    kode_siswa: "",
+    nama_siswa: "",
+    alamat_siswa: "",
+    tgl_siswa: "",
+    id_jurusan: ""
   });
 
   const [errors, setErrors] = useState({});
@@ -23,19 +24,19 @@ export default function SiswaFormModal({
   useEffect(() => {
     if (initialData) {
       setFormData({
-        kode_siswa: initialData.kode_siswa || '',
-        nama_siswa: initialData.nama_siswa || '',
-        alamat_siswa: initialData.alamat_siswa || '',
-        tgl_siswa: initialData.tgl_siswa || '',
-        id_jurusan: initialData.id_jurusan ? String(initialData.id_jurusan) : ''
+        kode_siswa: initialData.kode_siswa || "",
+        nama_siswa: initialData.nama_siswa || "",
+        alamat_siswa: initialData.alamat_siswa || "",
+        tgl_siswa: initialData.tgl_siswa || "",
+        id_jurusan: initialData.id_jurusan ? String(initialData.id_jurusan) : ""
       });
     } else {
       setFormData({
-        kode_siswa: '',
-        nama_siswa: '',
-        alamat_siswa: '',
-        tgl_siswa: '',
-        id_jurusan: jurusanList.length > 0 ? String(jurusanList[0].id) : ''
+        kode_siswa: "",
+        nama_siswa: "",
+        alamat_siswa: "",
+        tgl_siswa: "",
+        id_jurusan: jurusanList.length > 0 ? String(jurusanList[0].id) : ""
       });
     }
     setErrors({});
@@ -54,19 +55,19 @@ export default function SiswaFormModal({
   const validate = () => {
     const newErrors = {};
     if (!formData.kode_siswa.trim()) {
-      newErrors.kode_siswa = 'Kode siswa wajib diisi';
+      newErrors.kode_siswa = "Kode siswa wajib diisi";
     }
     if (!formData.nama_siswa.trim()) {
-      newErrors.nama_siswa = 'Nama siswa wajib diisi';
+      newErrors.nama_siswa = "Nama siswa wajib diisi";
     }
     if (!formData.alamat_siswa.trim()) {
-      newErrors.alamat_siswa = 'Alamat siswa wajib diisi';
+      newErrors.alamat_siswa = "Alamat domisili siswa wajib diisi";
     }
     if (!formData.tgl_siswa) {
-      newErrors.tgl_siswa = 'Tanggal siswa wajib dipilih';
+      newErrors.tgl_siswa = "Tanggal siswa wajib dipilih";
     }
     if (!formData.id_jurusan) {
-      newErrors.id_jurusan = 'Jurusan siswa wajib dipilih';
+      newErrors.id_jurusan = "Program jurusan wajib dipilih";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -84,104 +85,111 @@ export default function SiswaFormModal({
       });
       onClose();
     } catch (err) {
-      // Error ditangani oleh parent toast
+      // Ditangani oleh toast
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h3>{isEditMode ? 'Edit Data Siswa' : 'Tambah Data Siswa Baru'}</h3>
-          <button type="button" className="btn-close" onClick={onClose}>
-            ✕
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-head">
+          <h3 className="modal-title">
+            {isEditMode ? "Perbarui Informasi Siswa" : "Tambah Data Siswa Baru"}
+          </h3>
+          <button
+            type="button"
+            className="modal-close-icon"
+            onClick={onClose}
+            title="Tutup formulir"
+          >
+            <IconX size={18} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="modal-body">
+          <div className="modal-content-area">
             {/* a. Kode Siswa */}
-            <div className="form-group">
-              <label className="form-label">
-                Kode Siswa <span className="required-star">*</span>
+            <div className="field-group">
+              <label className="field-label">
+                Kode Siswa <span className="asterisk">*</span>
               </label>
               <input
                 type="text"
                 name="kode_siswa"
-                className="form-control"
+                className={`field-input ${errors.kode_siswa ? "has-error" : ""}`}
                 placeholder="Contoh: SIS-006"
                 value={formData.kode_siswa}
                 onChange={handleChange}
                 autoFocus
               />
               {errors.kode_siswa && (
-                <div className="form-error">{errors.kode_siswa}</div>
+                <div className="field-feedback-error">{errors.kode_siswa}</div>
               )}
             </div>
 
             {/* b. Nama Siswa */}
-            <div className="form-group">
-              <label className="form-label">
-                Nama Siswa <span className="required-star">*</span>
+            <div className="field-group">
+              <label className="field-label">
+                Nama Lengkap Siswa <span className="asterisk">*</span>
               </label>
               <input
                 type="text"
                 name="nama_siswa"
-                className="form-control"
-                placeholder="Nama lengkap siswa"
+                className={`field-input ${errors.nama_siswa ? "has-error" : ""}`}
+                placeholder="Masukkan nama lengkap siswa sesuai identitas"
                 value={formData.nama_siswa}
                 onChange={handleChange}
               />
               {errors.nama_siswa && (
-                <div className="form-error">{errors.nama_siswa}</div>
+                <div className="field-feedback-error">{errors.nama_siswa}</div>
               )}
             </div>
 
             {/* c. Alamat Siswa */}
-            <div className="form-group">
-              <label className="form-label">
-                Alamat Siswa <span className="required-star">*</span>
+            <div className="field-group">
+              <label className="field-label">
+                Alamat Domisili Siswa <span className="asterisk">*</span>
               </label>
               <textarea
                 name="alamat_siswa"
-                className="form-control"
-                placeholder="Alamat domisili siswa..."
+                className={`field-textarea ${errors.alamat_siswa ? "has-error" : ""}`}
+                placeholder="Alamat jalan, kelurahan, kota/kabupaten..."
                 value={formData.alamat_siswa}
                 onChange={handleChange}
               />
               {errors.alamat_siswa && (
-                <div className="form-error">{errors.alamat_siswa}</div>
+                <div className="field-feedback-error">{errors.alamat_siswa}</div>
               )}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div className="field-grid-halves">
               {/* d. Tgl Siswa */}
-              <div className="form-group">
-                <label className="form-label">
-                  Tgl Siswa <span className="required-star">*</span>
+              <div className="field-group">
+                <label className="field-label">
+                  Tanggal Siswa <span className="asterisk">*</span>
                 </label>
                 <input
                   type="date"
                   name="tgl_siswa"
-                  className="form-control"
+                  className={`field-input ${errors.tgl_siswa ? "has-error" : ""}`}
                   value={formData.tgl_siswa}
                   onChange={handleChange}
                 />
                 {errors.tgl_siswa && (
-                  <div className="form-error">{errors.tgl_siswa}</div>
+                  <div className="field-feedback-error">{errors.tgl_siswa}</div>
                 )}
               </div>
 
               {/* e. Jurusan Siswa */}
-              <div className="form-group">
-                <label className="form-label">
-                  Jurusan Siswa <span className="required-star">*</span>
+              <div className="field-group">
+                <label className="field-label">
+                  Program Jurusan <span className="asterisk">*</span>
                 </label>
                 <select
                   name="id_jurusan"
-                  className="form-control"
+                  className={`field-select ${errors.id_jurusan ? "has-error" : ""}`}
                   value={formData.id_jurusan}
                   onChange={handleChange}
                 >
@@ -193,16 +201,16 @@ export default function SiswaFormModal({
                   ))}
                 </select>
                 {errors.id_jurusan && (
-                  <div className="form-error">{errors.id_jurusan}</div>
+                  <div className="field-feedback-error">{errors.id_jurusan}</div>
                 )}
               </div>
             </div>
           </div>
 
-          <div className="modal-footer">
+          <div className="modal-action-bar">
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-outline"
               onClick={onClose}
               disabled={submitting}
             >
@@ -213,7 +221,11 @@ export default function SiswaFormModal({
               className="btn btn-primary"
               disabled={submitting}
             >
-              {submitting ? 'Menyimpan...' : isEditMode ? 'Simpan Perubahan' : 'Tambah Siswa'}
+              {submitting
+                ? "Menyimpan Data..."
+                : isEditMode
+                ? "Simpan Perubahan"
+                : "Simpan Siswa"}
             </button>
           </div>
         </form>
